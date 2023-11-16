@@ -1,145 +1,433 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Validation Plots</title>
+        <link rel="shortcut icon" type="image/png" href="faser_logo.png"/>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                padding-left: 24px;
+                padding-right: 24px;
+            }
 
-   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="index.css" />
-    <title>Validation Plots</title>
-    <link rel="shortcut icon" type="image/png" href="faser_logo.png"/>
- </head>
- <body>
-    <h2>Perfect Gemoetry Fluka MC vs Collision Data</p>
-        <div class="wrapper">
-            <div><img src="ideal_geo_MC_vs_data_com_chi2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_momentum.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_px.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_py.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_pz.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_tx.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_ty.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_x.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_y.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta0_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta0_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta0_layer2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta1_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta1_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta1_layer2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta2_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta2_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta2_layer2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta3.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta3_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta3_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_data_com_res_sta3_layer2.png" width="400px" height="400px" /></div>
+            #gallery {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            #options {
+                display: inline-block;
+                padding-left: 24px;
+            }
+
+            #filters {
+                margin-bottom: 10px;
+                display: flex;
+                flex-wrap: nowrap;
+            }
+
+            #subfilters-1 {
+                margin-bottom: 10px;
+                display: flex;
+                flex-wrap: nowrap;
+                /* justify-content: space-between; */
+            }
+
+            #subfilters-2 {
+                margin-bottom: 10px;
+                display: flex;
+                flex-wrap: nowrap;
+            }
+
+            .filter-button {
+                margin: 5px;
+                padding: 10px;
+                cursor: pointer;
+                background-color: #f0f0f0;
+                border-radius: 4px;
+            }
+
+            .subfilter-1-button {
+                margin: 5px;
+                padding: 10px;
+                cursor: pointer;
+                background-color: #f0f0f0;
+                border-radius: 4px;
+            }
+
+            .subfilter-2-button {
+                margin: 5px;
+                padding: 10px;
+                cursor: pointer;
+                background-color: #f0f0f0;
+                border-radius: 4px;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                max-width: 700px;
+                margin-left: 24px;
+                margin-right: 24px;
+                /* margin: 20px auto; */
+            }
+
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <h1 style="padding-top: 10px; padding-bottom: 20px; text-align: center;">Data Visualization Tool</h1>
+
+        <h2>Meta Data:</h2>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Run Info</th>
+                        <th>Production Date</th>
+                        <th>Number of Events</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Row 1, Cell 1</td>
+                        <td>Row 1, Cell 2</td>
+                        <td>Row 1, Cell 3</td>
+                    </tr>
+                    <tr>
+                        <td>Row 2, Cell 1</td>
+                        <td>Row 2, Cell 2</td>
+                        <td>Row 2, Cell 3</td>
+                    </tr>
+                    <tr>
+                        <td>Row 3, Cell 1</td>
+                        <td>Row 3, Cell 2</td>
+                        <td>Row 3, Cell 3</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <h2>Perfect Gemoetry Fluka MC vs Aligned Collision Data</p>
-            <div class="wrapper">
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_chi2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_momentum.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_px.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_py.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_pz.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_tx.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_ty.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_x.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_y.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta0_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta0_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta0_layer2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta1_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta1_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta1_layer2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta2_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta2_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta2_layer2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta3.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta3_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta3_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_data_com_res_sta3_layer2.png" width="400px" height="400px" /></div>
+        <h2>Options:</h2>
+        <div id="options">
+            <div id="filters">
+                <h3>Experiment: </h3>
+                <div style="padding-left: 10px;">
+                    <button class="filter-button" onclick="filterImages('IFT_2022_alpha', currentSubCategory1, currentSubCategory2)">IFT_2022_alpha</button>
+                </div>
             </div>
 
+            <div id="subfilters-1">
+                <h3>Phase: </h3>
+                <div style="padding-left: 57px;">
+                    <button class="subfilter-1-button" onclick="filterImages(currentCategory, 'all', currentSubCategory2)">All</button>
+                    <button class="subfilter-1-button" onclick="filterImages(currentCategory, 'pre', currentSubCategory2)">Pre Run</button>
+                    <button class="subfilter-1-button" onclick="filterImages(currentCategory, 'post', currentSubCategory2)">Post Run</button>
+                    <!-- <button class="subfilter-1-button" onclick="filterImages(currentCategory, 'res', currentSubCategory2)">Res Files</button> -->
+                </div>
+            </div>
 
-    <h2>Perfect Gemoetry Fluka MC vs Mis-aligned Fluka MC</p>
-        <div class="wrapper">
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_chi2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_momentum.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_px.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_py.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_pz.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_tx.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_ty.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_x.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_y.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta0_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta0_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta0_layer2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta1_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta1_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta1_layer2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta2_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta2_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta2_layer2.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta3.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta3_layer0.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta3_layer1.png" width="400px" height="400px" /></div>
-            <div><img src="ideal_geo_MC_vs_mis_aligned_MC_com_res_sta3_layer2.png" width="400px" height="400px" /></div>
+            <div id="subfilters-2">
+                <h3>Category: </h3>	
+                <div style="padding-left: 32px;">
+                    <button class="subfilter-2-button" onclick="filterImages(currentCategory, currentSubCategory1, 'all')">All</button>
+                    <button class="subfilter-2-button" onclick="filterImages(currentCategory, currentSubCategory1, 'station')">Station</button>
+                    <button class="subfilter-2-button" onclick="filterImages(currentCategory, currentSubCategory1, 'layer')">Layer</button>
+                    <button class="subfilter-2-button" onclick="filterImages(currentCategory, currentSubCategory1, 'module')">Module</button>
+                    <button class="subfilter-2-button" onclick="filterImages(currentCategory, currentSubCategory1, 'chi2')">Chi2</button>
+                </div>
+            </div>
         </div>
 
-        <h2>Perfect Gemoetry Fluka MC vs Aligned Fluka MC</p>
-            <div class="wrapper">
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_chi2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_momentum.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_px.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_py.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_pz.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_tx.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_ty.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_x.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_y.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta0_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta0_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta0_layer2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta1_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta1_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta1_layer2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta2_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta2_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta2_layer2.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta3.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta3_layer0.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta3_layer1.png" width="400px" height="400px" /></div>
-                <div><img src="ideal_geo_MC_vs_aligned_MC_com_res_sta3_layer2.png" width="400px" height="400px" /></div>
-            </div>
+        <h2>Validation Plots:</h2>
+        <div id="gallery"></div>
 
-<!--    <h1>2nd Analysis</h1>
-    <h2>Description of analysis goes here</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-    <img src="nickcage.png" width="800">
-    <br>
-    <a href="https://github.com/plotly-dash-apps/static-website-example">Code on Github</a>
-    <br>
-    <a href="https://austinlasseter.medium.com/create-a-static-webpage-using-github-and-plotly-468ae89710d3">Medium Blog Post</a>
-    <br>
-    <a href="https://plotly.com/python/linear-fits/">Data Source</a>   -->
-</body>    
+        <script>
+            const images = [
+                { src: 'ideal_geo_MC_vs_data_com_chi2.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'station' },
+                //////////////////
+                // Pre
+                //////////////////
+                // Chi2
+                { src: 'IFT_2022_alpaha/pre/chi2/chi2.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'chi2' },
+                { src: 'IFT_2022_alpaha/pre/chi2/chi2_ndof.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'chi2' },
+                // Station
+                { src: 'IFT_2022_alpaha/pre/station/station1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/pre/station/station2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/pre/station/station3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/pre/station/station0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/pre/station/station0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'station' },
+                // Layer
+                { src: 'IFT_2022_alpaha/pre/layer/station1_layer0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station1_layer1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station2_layer0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station2_layer1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station3_layer0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station3_layer1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station0_layer0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station0_layer1_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station0_layer0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/pre/layer/station0_layer1_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'layer' },
+                // Module
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer0_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station1_layer1_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer0_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station2_layer1_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer0_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station3_layer1_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module1_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module2_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module3_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module4_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module5_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module6_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module7_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module1_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module2_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module3_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module4_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module5_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module6_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module7_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module1_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module2_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module3_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module4_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module5_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module6_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer0_module7_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module1_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module2_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module3_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module4_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module5_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module6_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/pre/module/station0_layer1_module7_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'pre', subcategory2: 'module' },
 
+                //////////////////
+                // Post
+                //////////////////
+                // Chi2
+                { src: 'IFT_2022_alpaha/post/chi2/chi2.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'chi2' },
+                { src: 'IFT_2022_alpaha/post/chi2/chi2_ndof.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'chi2' },
+                // Station
+                { src: 'IFT_2022_alpaha/post/station/station1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/post/station/station2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/post/station/station3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/post/station/station0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'station' },
+                { src: 'IFT_2022_alpaha/post/station/station0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'station' },
+                // Layer
+                { src: 'IFT_2022_alpaha/post/layer/station1_layer0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station1_layer1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station2_layer0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station2_layer1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station3_layer0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station3_layer1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station0_layer0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station0_layer1_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station0_layer0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                { src: 'IFT_2022_alpaha/post/layer/station0_layer1_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'layer' },
+                // Module
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer0_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station1_layer1_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer0_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station2_layer1_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer0_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module0_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module1_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module2_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module3_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module4_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module5_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module6_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station3_layer1_module7_cluster_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module1_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module2_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module3_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module4_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module5_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module6_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module7_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module0_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module1_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module2_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module3_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module4_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module5_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module6_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module7_spacepoint_resx.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module1_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module2_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module3_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module4_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module5_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module6_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer0_module7_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module0_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module1_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module2_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module3_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module4_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module5_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module6_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+                { src: 'IFT_2022_alpaha/post/module/station0_layer1_module7_spacepoint_resy.png', category: 'IFT_2022_alpha', subcategory1: 'post', subcategory2: 'module' },
+            ];
+
+            let currentCategory = 'IFT_2022_alpha'
+            let currentSubCategory1 = 'pre'
+            let currentSubCategory2 = 'station'
+
+            function filterImages(category, subcategory1, subcategory2) {
+                const gallery = document.getElementById('gallery');
+                gallery.innerHTML = '';
+
+                if (category !== currentCategory && category !== undefined) {
+                    currentCategory = category;
+                }
+                if (subcategory1 !== currentSubCategory1 && subcategory1 !== undefined) {
+                    currentSubCategory1 = subcategory1;
+                }
+                if (subcategory2 !== currentSubCategory2 && subcategory2 !== undefined) {
+                    currentSubCategory2 = subcategory2;
+                }
+
+                // Initial category filtering
+                let filteredImages = images.filter(image => image.category === currentCategory);
+
+                // Subcategory1 filtering
+                if (currentSubCategory1 !== 'all') {
+                    filteredImages = filteredImages.filter(image => image.subcategory1 === currentSubCategory1);
+                }
+
+                // Subcategory2 filtering
+                if (currentSubCategory2 !== 'all') {
+                    filteredImages = filteredImages.filter(image => image.subcategory2 === currentSubCategory2);
+                }
+
+                // Display filtered images
+                filteredImages.forEach(image => displayImage(image.src));
+
+                console.log(currentCategory)
+
+            }
+
+            function displayImage(src) {
+                const gallery = document.getElementById('gallery');
+                const img = document.createElement('img');
+                img.src = src;
+                img.style.width = '500px'; // Set the width as needed
+                img.style.height = 'auto';
+                img.style.maxWidth = '100%'
+                img.style.margin = '5px';
+                img.style.display = 'block';
+                // gallery.appendChild(img);
+                img.onerror = () => {
+                    console.log('error loading image')
+                }
+                img.onload = function() {
+                    console.log('loaded image')
+                    gallery.appendChild(img)
+                }
+            }
+
+            // Initial display with all images
+            filterImages();
+
+        </script>
+    </body>
 </html>
