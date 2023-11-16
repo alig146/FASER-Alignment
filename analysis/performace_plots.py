@@ -140,7 +140,7 @@ plt.close(fig_chi2)
 
 fig_chi2_ndf = plt.figure(figsize=(10, 10))
 plt.hist(data['fitParam_chi2']/data['fitParam_ndf'], bins=100, histtype='step', linewidth=0.5)
-plt.xlabel('chi2', fontsize=20)
+plt.xlabel('chi2/ndf', fontsize=20)
 plt.ylabel('Number of Events', fontsize=20)
 plt.xticks(fontsize=20)
 plt.xlim(0, 5)
@@ -191,6 +191,24 @@ for lay in range(3):
         fig.savefig(f'../docs/IFT_2022_alpha/pre/module/station0_layer{lay}_module{mod}_spacepoint_resx.png')
         plt.close(fig)
 
+figy = plt.figure(figsize=(10, 10))
+plot(data, 0, 0, 0, '', draw_mod=False, draw_layer=False, param='fitParam_align_ift_local_residual_y', id='fitParam_align_ift_id', range=3)
+figy.savefig('../docs/IFT_2022_alpha/pre/station/station0_spacepoint_resy.png')
+plt.close(figy)
+
+for lay in range(3):
+    mod=0
+    fig = plt.figure(figsize=(10, 10))
+    plot(data, 0, lay, mod, '', draw_mod=False, draw_layer=True, param='fitParam_align_ift_local_residual_y', id='fitParam_align_ift_id', range=3)
+    fig.savefig(f'../docs/IFT_2022_alpha/pre/layer/station0_layer{lay}_spacepoint_resy.png')
+    plt.close(fig)
+
+for lay in range(3):
+    for mod in range(0, 8):
+        fig = plt.figure(figsize=(10, 10))
+        plot(data, 0, lay, mod, '', draw_mod=True, draw_layer=False, param='fitParam_align_ift_local_residual_y', id='fitParam_align_ift_id', range=3)
+        fig.savefig(f'../docs/IFT_2022_alpha/pre/module/station0_layer{lay}_module{mod}_spacepoint_resy.png')
+        plt.close(fig)
 
 
 # filenames = ['/home/agarabag/millepede/target/algn_S1L0_v2_iter1.res', 
