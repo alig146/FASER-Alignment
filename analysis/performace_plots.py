@@ -60,15 +60,9 @@ def cut(data, Station, Layer, mod, draw_mod=False, draw_layer=False, param='fitP
     res_x = ak.flatten(data[param])
     id = ak.flatten(data[id_param])
 
-    if id_param == 'fitParam_align_ift_id':
-        id = id + 1000
-        station=(id//1000)%10
-        layer=(id//100)%10
-        module=(id//10)%10
-    else:
-        station=(id//1000)%10
-        layer=(id//100)%10
-        module=(id//10)%10
+    station=(id//1000)%10
+    layer=(id//100)%10
+    module=(id//10)%10
     # print(station, layer, module)
     if draw_mod:
         return res_x[ak.where((station==Station)&(layer==Layer)&(module==mod))]
@@ -149,7 +143,7 @@ plt.hist(data['fitParam_chi2']/data['fitParam_ndf'], bins=100, histtype='step', 
 plt.xlabel('chi2', fontsize=20)
 plt.ylabel('Number of Events', fontsize=20)
 plt.xticks(fontsize=20)
-plt.xlim(0, 50)
+plt.xlim(0, 5)
 fig_chi2_ndf.savefig('../docs/IFT_2022_alpha/pre/chi2/chi2_ndof.png')
 plt.close(fig_chi2_ndf)
 
@@ -173,27 +167,27 @@ for sta in range(1, 4):
     for lay in range(3):
         for mod in range(0, 8):
             fig = plt.figure(figsize=(10, 10))
-            plot(data, sta, lay, mod, '', draw_mod=True, draw_layer=True, param='fitParam_align_local_residual_x', id='fitParam_align_id', range=0.1)
+            plot(data, sta, lay, mod, '', draw_mod=True, draw_layer=False, param='fitParam_align_local_residual_x', id='fitParam_align_id', range=0.1)
             fig.savefig(f'../docs/IFT_2022_alpha/pre/module/station{sta}_layer{lay}_module{mod}_cluster_resx.png')
             plt.close(fig)
 
 #IFT plots
 fig = plt.figure(figsize=(10, 10))
-plot(data, 1, 0, 0, '', draw_mod=False, draw_layer=False, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=1)
+plot(data, 0, 0, 0, '', draw_mod=False, draw_layer=False, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=1)
 fig.savefig('../docs/IFT_2022_alpha/pre/station/station0_spacepoint_resx.png')
 plt.close(fig)
 
 for lay in range(3):
     mod=0
     fig = plt.figure(figsize=(10, 10))
-    plot(data, 1, lay, mod, '', draw_mod=False, draw_layer=True, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=1)
+    plot(data, 0, lay, mod, '', draw_mod=False, draw_layer=True, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=1)
     fig.savefig(f'../docs/IFT_2022_alpha/pre/layer/station0_layer{lay}_spacepoint_resx.png')
     plt.close(fig)
 
 for lay in range(3):
     for mod in range(0, 8):
         fig = plt.figure(figsize=(10, 10))
-        plot(data, 1, lay, mod, '', draw_mod=True, draw_layer=True, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=1)
+        plot(data, 0, lay, mod, '', draw_mod=True, draw_layer=False, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=1)
         fig.savefig(f'../docs/IFT_2022_alpha/pre/module/station0_layer{lay}_module{mod}_spacepoint_resx.png')
         plt.close(fig)
 
