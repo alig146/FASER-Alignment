@@ -14,18 +14,33 @@
                 padding-right: 24px;
             }
 
+            #tool {
+                display: inline-block;
+                background-color: #ffffff;
+                border-color: rgb(224, 224, 224);
+                border-style: solid;
+                border-width: 4px;
+                border-radius: 4px;
+                /* padding-top: 10px; */
+                align-items: center;
+            }
+
             #gallery {
                 display: flex;
                 flex-wrap: wrap;
+                justify-content: center;
             }
             
             #options {
-                display: inline-block;
-                padding-left: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-left: 10px;
+                padding-right: 10px;
+                background-color: #04AA6D;
             }
 
             #filters {
-                margin-bottom: 10px;
                 display: flex;
                 flex-wrap: wrap;
             }
@@ -115,7 +130,7 @@
             
         </style>
     </head>
-    
+
     <!-- HTML -->
     <body>
         <h1 style="padding-top: 10px; padding-bottom: 20px; text-align: center;">Data Visualization Tool</h1>
@@ -150,72 +165,77 @@
             </table>
         </div>
 
-        <h2>Options:</h2>
-        <div id="options">
-            <div id="filters">            
-                <div class="dropdown">
-                    <button class="dropbtn">Experiment</button>
-                    <div class="dropdown-content">
-                        <button class="filter-button" onclick="filterImages('IFT_2022_alpha', currentSubCategory1, currentSubCategory2)">IFT_2022</button>
+        <h2>Validation Plots:</h2>
+        <div id="tool">
+            <div id="options">
+                <div id="filters">            
+                    <div class="dropdown">
+                        <button class="dropbtn">Experiment</button>
+                        <div class="dropdown-content">
+                            <button class="filter-button" onclick="filterImages('IFT_2022_alpha', currentSubCategory1, currentSubCategory2)">IFT_2022</button>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Phase</button>
+                        <div class="dropdown-content">
+                            <button class="filter-button" onclick="filterImages(currentCategory, 'all', currentSubCategory2)">All</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, 'pre', currentSubCategory2)">Pre Run</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, 'post', currentSubCategory2)">Post Run</button>
+                            <!-- <button class="subfilter-1-button" onclick="filterImages(currentCategory, 'res', currentSubCategory2)">Res Files</button> -->
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Category</button>
+                        <div class="dropdown-content">
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'all')">All</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'station')">Station</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'layer')">Layer</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'module')">Module</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'chi2')">Chi2</button>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Station</button>
+                        <div class="dropdown-content">
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 'all', currentLayerIndex, currentModuleIndex)">All</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 0, currentLayerIndex, currentModuleIndex)">0</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 1, currentLayerIndex, currentModuleIndex)">1</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 2, currentLayerIndex, currentModuleIndex)">2</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 3, currentLayerIndex, currentModuleIndex)">3</button>
+                        </div>
+                    </div>	
+                    <div class="dropdown">
+                        <button class="dropbtn">Layer</button>
+                        <div class="dropdown-content">
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 'all', currentModuleIndex)">All</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 0, currentModuleIndex)">0</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 1, currentModuleIndex)">1</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 2, currentModuleIndex)">2</button>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Module</button>
+                        <div class="dropdown-content">
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 'all')">All</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 0)">0</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 1)">1</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 2)">2</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 3)">3</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 4)">4</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 5)">5</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 6)">6</button>
+                            <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 7)">7</button>
+                        </div>
                     </div>
                 </div>
-                <div class="dropdown">
-                    <button class="dropbtn">Phase</button>
-                    <div class="dropdown-content">
-                        <button class="filter-button" onclick="filterImages(currentCategory, 'all', currentSubCategory2)">All</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, 'pre', currentSubCategory2)">Pre Run</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, 'post', currentSubCategory2)">Post Run</button>
-                        <!-- <button class="subfilter-1-button" onclick="filterImages(currentCategory, 'res', currentSubCategory2)">Res Files</button> -->
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="dropbtn">Category</button>
-                    <div class="dropdown-content">
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'all')">All</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'station')">Station</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'layer')">Layer</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'module')">Module</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, 'chi2')">Chi2</button>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="dropbtn">Station</button>
-                    <div class="dropdown-content">
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 'all', currentLayerIndex, currentModuleIndex)">All</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 0, currentLayerIndex, currentModuleIndex)">0</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 1, currentLayerIndex, currentModuleIndex)">1</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 2, currentLayerIndex, currentModuleIndex)">2</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, 3, currentLayerIndex, currentModuleIndex)">3</button>
-                    </div>
-                </div>	
-                <div class="dropdown">
-                    <button class="dropbtn">Layer</button>
-                    <div class="dropdown-content">
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 'all', currentModuleIndex)">All</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 0, currentModuleIndex)">0</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 1, currentModuleIndex)">1</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, 2, currentModuleIndex)">2</button>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="dropbtn">Module</button>
-                    <div class="dropdown-content">
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 'all')">All</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 0)">0</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 1)">1</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 2)">2</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 3)">3</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 4)">4</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 5)">5</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 6)">6</button>
-                        <button class="filter-button" onclick="filterImages(currentCategory, currentSubCategory1, currentSubCategory2, currentStationIndex, currentLayerIndex, 7)">7</button>
+                <div id="filters">
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="filterImages(currentCategory, 'all', 'all', 'all', 'all', 'all')">Show All</button>
                     </div>
                 </div>
             </div>
+            <div id="gallery"></div>
         </div>
-        <h2>Validation Plots:</h2>
-        <div id="gallery"></div>
-
 
         <!-- JavaScript -->
         <script>
