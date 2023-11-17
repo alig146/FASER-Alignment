@@ -124,7 +124,7 @@ def plot(TS, station, layer, mod, label, draw_mod=False, draw_layer=False, param
         plt.title(f'sta{station}', fontsize=25)
 
 
-f0 = uproot.open('/data/agarabag/a_c/run/data_layer_r0018_ini/kfalignment_data_skimmed.root')
+f0 = uproot.open('/data/agarabag/a_c/run/data_layer_r0018_iter5/kfalignment_data_skimmed.root')
 data = ReadBranches(f0, branches)
 
 
@@ -135,7 +135,7 @@ plt.xlabel('chi2', fontsize=20)
 plt.ylabel('Number of Events', fontsize=20)
 plt.xticks(fontsize=20)
 plt.xlim(0, 50)
-fig_chi2.savefig('../docs/IFT_2022_alpha/pre/chi2/chi2.png')
+fig_chi2.savefig('../docs/IFT_2022_alpha/post/chi2/chi2.png')
 plt.close(fig_chi2)
 
 fig_chi2_ndf = plt.figure(figsize=(10, 10))
@@ -144,7 +144,7 @@ plt.xlabel('chi2/ndf', fontsize=20)
 plt.ylabel('Number of Events', fontsize=20)
 plt.xticks(fontsize=20)
 plt.xlim(0, 5)
-fig_chi2_ndf.savefig('../docs/IFT_2022_alpha/pre/chi2/chi2_ndof.png')
+fig_chi2_ndf.savefig('../docs/IFT_2022_alpha/post/chi2/chi2_ndof.png')
 plt.close(fig_chi2_ndf)
 
 for sta in range(1, 4):
@@ -152,7 +152,7 @@ for sta in range(1, 4):
     lay=0
     fig = plt.figure(figsize=(10, 10))
     plot(data, sta, lay, mod, '', draw_mod=False, draw_layer=False, param='fitParam_align_local_residual_x', id='fitParam_align_id', range=0.1)
-    fig.savefig(f'../docs/IFT_2022_alpha/pre/station/station{sta}_cluster_resx.png')
+    fig.savefig(f'../docs/IFT_2022_alpha/post/station/station{sta}_cluster_resx.png')
     plt.close(fig)
 
 for sta in range(1, 4):
@@ -160,7 +160,7 @@ for sta in range(1, 4):
         mod=0
         fig = plt.figure(figsize=(10, 10))
         plot(data, sta, lay, mod, '', draw_mod=False, draw_layer=True, param='fitParam_align_local_residual_x', id='fitParam_align_id', range=0.1)
-        fig.savefig(f'../docs/IFT_2022_alpha/pre/layer/station{sta}_layer{lay}_cluster_resx.png')
+        fig.savefig(f'../docs/IFT_2022_alpha/post/layer/station{sta}_layer{lay}_cluster_resx.png')
         plt.close(fig)
 
 for sta in range(1, 4):
@@ -168,46 +168,46 @@ for sta in range(1, 4):
         for mod in range(0, 8):
             fig = plt.figure(figsize=(10, 10))
             plot(data, sta, lay, mod, '', draw_mod=True, draw_layer=False, param='fitParam_align_local_residual_x', id='fitParam_align_id', range=0.1)
-            fig.savefig(f'../docs/IFT_2022_alpha/pre/module/station{sta}_layer{lay}_module{mod}_cluster_resx.png')
+            fig.savefig(f'../docs/IFT_2022_alpha/post/module/station{sta}_layer{lay}_module{mod}_cluster_resx.png')
             plt.close(fig)
 
 #IFT plots
 fig = plt.figure(figsize=(10, 10))
 plot(data, 0, 0, 0, '', draw_mod=False, draw_layer=False, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=2)
-fig.savefig('../docs/IFT_2022_alpha/pre/station/station0_spacepoint_resx.png')
+fig.savefig('../docs/IFT_2022_alpha/post/station/station0_spacepoint_resx.png')
 plt.close(fig)
 
 for lay in range(3):
     mod=0
     fig = plt.figure(figsize=(10, 10))
     plot(data, 0, lay, mod, '', draw_mod=False, draw_layer=True, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=2)
-    fig.savefig(f'../docs/IFT_2022_alpha/pre/layer/station0_layer{lay}_spacepoint_resx.png')
+    fig.savefig(f'../docs/IFT_2022_alpha/post/layer/station0_layer{lay}_spacepoint_resx.png')
     plt.close(fig)
 
 for lay in range(3):
     for mod in range(0, 8):
         fig = plt.figure(figsize=(10, 10))
         plot(data, 0, lay, mod, '', draw_mod=True, draw_layer=False, param='fitParam_align_ift_local_residual_x', id='fitParam_align_ift_id', range=2)
-        fig.savefig(f'../docs/IFT_2022_alpha/pre/module/station0_layer{lay}_module{mod}_spacepoint_resx.png')
+        fig.savefig(f'../docs/IFT_2022_alpha/post/module/station0_layer{lay}_module{mod}_spacepoint_resx.png')
         plt.close(fig)
 
 figy = plt.figure(figsize=(10, 10))
 plot(data, 0, 0, 0, '', draw_mod=False, draw_layer=False, param='fitParam_align_ift_local_residual_y', id='fitParam_align_ift_id', range=5)
-figy.savefig('../docs/IFT_2022_alpha/pre/station/station0_spacepoint_resy.png')
+figy.savefig('../docs/IFT_2022_alpha/post/station/station0_spacepoint_resy.png')
 plt.close(figy)
 
 for lay in range(3):
     mod=0
     fig = plt.figure(figsize=(10, 10))
     plot(data, 0, lay, mod, '', draw_mod=False, draw_layer=True, param='fitParam_align_ift_local_residual_y', id='fitParam_align_ift_id', range=5)
-    fig.savefig(f'../docs/IFT_2022_alpha/pre/layer/station0_layer{lay}_spacepoint_resy.png')
+    fig.savefig(f'../docs/IFT_2022_alpha/post/layer/station0_layer{lay}_spacepoint_resy.png')
     plt.close(fig)
 
 for lay in range(3):
     for mod in range(0, 8):
         fig = plt.figure(figsize=(10, 10))
         plot(data, 0, lay, mod, '', draw_mod=True, draw_layer=False, param='fitParam_align_ift_local_residual_y', id='fitParam_align_ift_id', range=5)
-        fig.savefig(f'../docs/IFT_2022_alpha/pre/module/station0_layer{lay}_module{mod}_spacepoint_resy.png')
+        fig.savefig(f'../docs/IFT_2022_alpha/post/module/station0_layer{lay}_module{mod}_spacepoint_resy.png')
         plt.close(fig)
 
 
